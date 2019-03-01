@@ -1,5 +1,5 @@
 <template>
-  <footer class="appFooter">フッター</footer>
+  <footer class="appFooter"></footer>
 </template>
 
 <script lang="ts">
