@@ -1,19 +1,38 @@
 <template>
-  <Detail :content="content" />
+  <div class="container">
+    <section class="detail">
+      <ListItem :entry="entry" />
+    </section>
+    <h2 class="head">最新記事</h2>
+    <Articles />
+  </div>
 </template>
 
 <script lang="ts">
 import axios from 'axios';
-import Detail from '@/components/parts/Detail.vue';
+import Article from '@/components/parts/Article.vue';
+import Articles from '@/components/parts/Articles.vue';
 import { Component, Vue } from 'vue-property-decorator';
+
+interface IEntry {
+  created_at: string;
+  date: string;
+  description: string;
+  id: number;
+  name: string;
+  title: string;
+  updated_at: string;
+  url: string;
+}
 
 @Component({
   components: {
-    Detail,
+    Article,
+    Articles,
   },
 })
 export default class Post extends Vue {
-  private content: any = {};
+  private entry: any = {};
 
   private created() {
     this.fetchData();
@@ -21,8 +40,8 @@ export default class Post extends Vue {
 
   private fetchData() {
     axios.get(`http://localhost:3000/posts/${this.$route.params.id}`)
-      .then((res: any) => {
-        this.content = res.data;
+      .then((res) => {
+        this.entry = res.data;
       });
   }
 }
@@ -30,18 +49,12 @@ export default class Post extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.detail {
+  padding: 12px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.head {
+  padding: 8px 12px 4px;
+  font-size: 1.6rem;
+  font-weight: bold;
 }
 </style>

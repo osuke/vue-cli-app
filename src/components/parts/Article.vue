@@ -20,7 +20,7 @@ interface IEntry {
 }
 
 @Component
-export default class ListItem extends Vue {
+export default class Article extends Vue {
   @Prop() private entry!: IEntry;
 }
 </script>
