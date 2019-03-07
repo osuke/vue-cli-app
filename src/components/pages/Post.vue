@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <section class="detail">
-      <ListItem :entry="entry" />
+      <Article
+        v-if="typeof entry.id !== 'undefined'"
+        :entry="entry"
+      />
     </section>
     <h2 class="head">最新記事</h2>
     <Articles />
@@ -10,9 +13,10 @@
 
 <script lang="ts">
 import axios from 'axios';
-import Article from '@/components/parts/Article.vue';
-import Articles from '@/components/parts/Articles.vue';
 import { Component, Vue } from 'vue-property-decorator';
+import Article from '@/components/modules/Article.vue';
+import Articles from '@/components/containers/Articles.vue';
+import { API_BASE_URL } from '@/constants/config';
 
 interface IEntry {
   created_at: string;
@@ -39,7 +43,7 @@ export default class Post extends Vue {
   }
 
   private fetchData() {
-    axios.get(`http://localhost:3000/posts/${this.$route.params.id}`)
+    axios.get(`${API_BASE_URL}/api/posts/${this.$route.params.id}`)
       .then((res) => {
         this.entry = res.data;
       });

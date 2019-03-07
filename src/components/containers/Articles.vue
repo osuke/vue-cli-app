@@ -14,8 +14,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
-import Article from '@/components/parts/Article.vue';
-import Button from '@/components/parts/Button.vue';
+import Article from '@/components/modules/Article.vue';
+import Button from '@/components/modules/Button.vue';
 import { API_BASE_URL } from '@/constants/config';
 
 interface IEntry {
@@ -45,7 +45,7 @@ export default class Home extends Vue {
   }
 
   private fetchData() {
-    axios.get(`${API_BASE_URL}/posts/?offset=${this.offset}`)
+    axios.get(`${API_BASE_URL}/api/posts/?offset=${this.offset}`)
       .then((res) => {
         this.entries.push(...res.data.items);
         if (parseInt(res.data.offset, 10) + res.data.items.length === res.data.total) {
