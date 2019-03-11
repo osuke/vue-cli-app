@@ -8617,6 +8617,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-analytics@^5.16.3:
+  version "5.16.3"
+  resolved "https://registry.yarnpkg.com/vue-analytics/-/vue-analytics-5.16.3.tgz#99124fe2e64a804d56746af025c3f421cd197072"
+  integrity sha512-1U6/AKm0plm1jxECfLKkBzMkNWdWkpc0O2/DsuOgk4PXaQ3FCTHQ+iWqwhtG2cTlF/lu3lRmYGGWhvHFyUZb/A==
+
 vue-class-component@^6.0.0, vue-class-component@^6.2.0:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.3.2.tgz#e6037e84d1df2af3bde4f455e50ca1b9eec02be6"
