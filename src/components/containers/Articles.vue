@@ -48,7 +48,7 @@ export default class Home extends Vue {
     axios.get(`${API_BASE_URL}/api/posts/?offset=${this.offset}`)
       .then((res) => {
         this.entries.push(...res.data.items);
-        if (parseInt(res.data.offset, 10) + res.data.items.length === res.data.total) {
+        if (parseInt(res.data.offset, 10) + res.data.items.length >= res.data.total) {
           this.isAvailable = false;
         }
         this.offset += 10;
