@@ -4,10 +4,11 @@
       <Article v-for="entry in entries" :key="entry.id" :entry="entry" />
     </div>
     <Button
-      v-if="isAvailable"
+      v-if="isAvailable && !isFetching"
       text="次の記事を読み込む"
       :clickHandler="fetchData"
     />
+    <div v-if="isFetching" class="ldsRing"><div /><div /><div /><div /></div>
   </section>
 </template>
 
@@ -39,12 +40,15 @@ export default class Home extends Vue {
   private entries: IEntry[] = [];
   private offset = 0;
   private isAvailable = false;
+  private isFetching = false;
 
   private created() {
     this.fetchData();
   }
 
   private fetchData() {
+    this.isFetching = true;
+
     axios.get(`${API_BASE_URL}/api/posts/?offset=${this.offset}`)
       .then((res) => {
         this.entries.push(...res.data.items);
@@ -53,6 +57,10 @@ export default class Home extends Vue {
         } else {
           this.isAvailable = true;
         }
+
+        setTimeout(() => {
+          this.isFetching = false;
+        }, 1000);
         this.offset += 10;
       });
   }
@@ -66,5 +74,41 @@ export default class Home extends Vue {
 }
 .list {
   margin-bottom: 24px;
+}
+.ldsRing {
+  display: block;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+}
+.ldsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 4px;
+  border: 3px solid #3b3b3b;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #3b3b3b transparent transparent transparent;
+}
+.ldsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.ldsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.ldsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
