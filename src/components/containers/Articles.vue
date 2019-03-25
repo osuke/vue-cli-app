@@ -8,7 +8,7 @@
       text="次の記事を読み込む"
       :clickHandler="fetchData"
     />
-    <div v-if="isFetching" class="ldsRing"><div /><div /><div /><div /></div>
+    <Loading v-if="isFetching" />
   </section>
 </template>
 
@@ -17,6 +17,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import axios from 'axios';
 import Article from '@/components/modules/Article.vue';
 import Button from '@/components/modules/Button.vue';
+import Loading from '@/components/modules/Loading.vue';
 import { API_BASE_URL } from '@/constants/config';
 
 interface IEntry {
@@ -34,9 +35,10 @@ interface IEntry {
   components: {
     Article,
     Button,
+    Loading,
   },
 })
-export default class Home extends Vue {
+export default class Articles extends Vue {
   private entries: IEntry[] = [];
   private offset = 0;
   private isAvailable = false;
@@ -75,35 +77,35 @@ export default class Home extends Vue {
 .list {
   margin-bottom: 24px;
 }
-.ldsRing {
+.loading {
   display: block;
   position: relative;
   width: 32px;
   height: 32px;
   margin: 0 auto;
 }
-.ldsRing div {
+.loading div {
   box-sizing: border-box;
   display: block;
   position: absolute;
   width: 24px;
   height: 24px;
   margin: 4px;
-  border: 3px solid #3b3b3b;
+  border: 3px solid #5195e6;
   border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #3b3b3b transparent transparent transparent;
+  animation: loading-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #5195e6 transparent transparent transparent;
 }
-.ldsRing div:nth-child(1) {
+.loading div:nth-child(1) {
   animation-delay: -0.45s;
 }
-.ldsRing div:nth-child(2) {
+.loading div:nth-child(2) {
   animation-delay: -0.3s;
 }
-.ldsRing div:nth-child(3) {
+.loading div:nth-child(3) {
   animation-delay: -0.15s;
 }
-@keyframes lds-ring {
+@keyframes loading-ring {
   0% {
     transform: rotate(0deg);
   }
