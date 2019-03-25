@@ -38,7 +38,7 @@ interface IEntry {
 export default class Home extends Vue {
   private entries: IEntry[] = [];
   private offset = 0;
-  private isAvailable = true;
+  private isAvailable = false;
 
   private created() {
     this.fetchData();
@@ -50,6 +50,8 @@ export default class Home extends Vue {
         this.entries.push(...res.data.items);
         if (parseInt(res.data.offset, 10) + res.data.items.length >= res.data.total) {
           this.isAvailable = false;
+        } else {
+          this.isAvailable = true;
         }
         this.offset += 10;
       });
